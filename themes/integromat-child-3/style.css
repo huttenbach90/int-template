@@ -1,0 +1,98 @@
+/*
+Theme Name: Integromat Help
+Theme URI: https://integromat.com
+Description: Help theme
+Author: Integromat s.r.o.
+Author URI: https://integromat.com
+Version: 1.0
+Template: integromat
+Text Domain: integromat
+*/
+
+/* DOCUMENTATION */
+body.page-template-page-docs > header .navbar {
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.page-template-page-docs header #searchform {
+    width: 400px;
+    max-width: 95%;
+}
+.page-template-page-docs header #searchform i {
+    top: calc(50% - 17px);
+}
+
+h2[icon] a,
+h2[icon] a:hover,
+h2[icon] a:focus,
+h2[icon] a:active {
+    color: #333;
+}
+h2[icon]:before {
+    color: #fbcb2b;
+    font-family: "Font Awesome 5 Pro";
+    margin-right: 15px;
+    font-size: .8em;
+    font-weight: 400;
+    position: relative;
+    top: -1px;
+}
+h2[icon="apps"]:before {
+    content: "\f386";
+}
+h2[icon="connections"]:before {
+    content: "\f0c1";
+}
+h2[icon="error-handling"]:before {
+    content: "\f0f0";
+}
+h2[icon="functions"]:before {
+    content: "\f12b";
+}
+h2[icon="item-mapping"]:before {
+    content: "\f0e8";
+}
+h2[icon="modules"]:before {
+    content: "\f111";
+}
+h2[icon="scenarios"]:before {
+    content: "\f1e0";
+}
+h2[icon="tools"]:before {
+    content: "\f0ad";
+}
+h2[icon="webhooks"]:before {
+    content: "\f57d";
+}
+a.doc-link {
+    position: relative;
+    padding: 5px 5px 15px 25px;
+}
+a.doc-link:before {
+    content: "\f15c";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 200;
+    color: rgba(47, 140, 187, .5);
+    line-height: 1em;
+}
+.no-before:before {
+    display: none;
+}
+.box {
+    padding: 1.5em 1em;
+    position: relative;
+}
+.box.origin {
+    background: #f0f8ff;
+    margin-bottom: -35px;
+}
+.box.origin .btn {
+    position: absolute;
+    right: 1em;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 38px;
+}
