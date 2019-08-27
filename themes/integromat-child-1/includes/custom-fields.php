@@ -2,7 +2,7 @@
 // Info metabox
 class infoMetabox {
 	private $screen = array(
-		'course',
+		'sfwd-courses',
 	);
 	private $meta_fields = array(
 		array(

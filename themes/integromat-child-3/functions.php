@@ -55,8 +55,8 @@ function help_register_sidebars() {
 		'before_title' => '',
 		'after_title' => '',
 		'empty_title'=> '',
-    ));
-    register_sidebar(array(
+  ));
+  register_sidebar(array(
 		'id' => 'contact-stripe',
 		'name' => 'Contact stripe',
 		'description' => '',
@@ -65,8 +65,8 @@ function help_register_sidebars() {
 		'before_title' => '',
 		'after_title' => '',
 		'empty_title'=> '',
-    ));
-    register_sidebar(array(
+  ));
+  register_sidebar(array(
 		'id' => 'bottom',
 		'name' => 'Bottom',
 		'description' => '',
@@ -76,5 +76,32 @@ function help_register_sidebars() {
 		'after_title' => '',
 		'empty_title'=> '',
 	));
+	register_sidebar(array(
+		'id' => 'archive-external',
+		'name' => 'Archive external header',
+		'description' => '',
+		'before_widget' => '',
+		'after_widget' => '',
+		'before_title' => '<h1 class="display-3">',
+		'after_title' => '</h1>',
+		'empty_title'=> '',
+	));
 }
 add_action( 'widgets_init', 'help_register_sidebars' );
+
+// Unset menu pages
+function remove_menus() {
+	remove_menu_page('edit.php?post_type=tutorial');
+	remove_menu_page('edit.php?post_type=sfwd-courses');
+}
+add_action( 'admin_menu', 'remove_menus' );
+
+// Get rid of LearnDash LMS
+add_action('admin_head', 'remove_learndash_lms');
+function remove_learndash_lms() {
+  echo '<style>
+		#toplevel_page_learndash-lms {
+			display: none;
+		}
+  </style>';
+}

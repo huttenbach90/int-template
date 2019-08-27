@@ -9,9 +9,9 @@ Template Name: Homepage
 <?php get_template_part('parts/page-home', 'header' ); ?>
 
 <div class="container pb-5">
-	<div id="primary" class="row mt-5">
+	<div id="primary" class="row mt-3 mt-md-4 mt-lg-5">
 
-		<div id="content" role="main" class="col-7 pr-5">
+		<div id="content" role="main" class="col-12 col-lg-7 pr-3 pr-lg-5">
 
 			<div class="row">
 
@@ -29,27 +29,12 @@ Template Name: Homepage
 
 		</div>
 
-		<aside class="col-5 pl-5">
-			<div class="display-6 mb-4 mt-2">
-				<?php _e("Top resources", "integromat"); ?>
-			</div>
-			<div class="row resources">
-				<?php dynamic_sidebar( 'homepage-aside' ); ?>
-			</div>
-		</aside>
+		<?php get_template_part('parts/aside', 'resources'); ?>
 
 	</div>
 </div>
 
-<div class="container-fluid theme-a1d36e text-center contact-stripe">
-	<?php dynamic_sidebar( 'contact-stripe' ); ?>
-</div>
+<?php get_template_part('parts/footer', 'contact'); ?>
+<?php get_template_part('parts/footer', 'app'); ?>
 
-<div class="gradient integromat-app">
-	<div class="container">
-		<div class="row align-items-center">
-			<?php dynamic_sidebar( 'bottom' ); ?>
-		</div>
-	</div>
-</div>
 <?php get_footer(); ?>

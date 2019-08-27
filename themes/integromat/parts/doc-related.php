@@ -7,9 +7,9 @@ if ($tags) {
 		$tag_ids[] = $individual_tag->slug;
 	}
 
+	switch_to_blog(2);
 	$args = array(
-		'blog_id' => array(2),
-		'posts_per_page' => 14,
+		'posts_per_page' => 6,
 		'orderby' => 'name',
 		'order' => 'ASC',
 		'tax_query' => array( 
@@ -21,26 +21,32 @@ if ($tags) {
 		),
 	);
 	
-	$network_q = new Network_Query( $args );
+	$network_q = new WP_Query( $args );
 	
 	if( $network_q->have_posts() ) : ?>
-		<div class="panel top-blue mb-4">
+		<div class="panel panel-rows top-blue mb-5 box-shadow">
 			<h3 class="mb-4"><?php _e("Related docs", "integromat"); ?></h3>
 			<?php
 			while( $network_q->have_posts() ) : $network_q->the_post();
 			switch_to_blog( $network_q->post->BLOG_ID ); ?>
-
-				<h5 class="mt-2 font-weight-light">
-					<a href="<?php echo get_permalink($network_q->post->ID); ?>">
+				<span class="mb-2 d-block">
+					<?php 
+					$terms = get_the_terms($network_q->post->ID, "doc");
+					foreach ($terms as $term) {
+						echo "<strong>" . $term->name . ":</strong>";
+					} ?>
+				</span>
+				<a href="<?php echo get_permalink($network_q->post->ID); ?>" class="no-decoration d-block w-100">
+					<h4 class="mt-2 font-weight-normal">
 						<?php echo $network_q->post->post_title; ?>
-					</a>
-				</h5>
+					</h4>
+				</a>
 			<?php
-			restore_current_blog();
 		endwhile;
 	
 		echo '</div>';
 	endif;
-	network_reset_postdata(); 
+	wp_reset_postdata();
+	restore_current_blog(); 
 }
 ?> 

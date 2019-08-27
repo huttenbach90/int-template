@@ -1,33 +1,30 @@
 <?php get_header(); ?>
-	<div id="primary" class="row-fluid">
-		<div id="content" role="main" class="span8 offset2">
 
-			<?php if ( have_posts() ) : ?>
+<?php get_template_part('/parts/page-no', 'header'); ?>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+	<div id="content" role="main" class="container">
 
-					<article class="post">
+		<?php 
+		if ( have_posts() ) :
+			while ( have_posts() ) : the_post(); 
+				setPostViews(get_the_ID()); ?>
 
-						<h1 class="title"><?php the_title(); ?></h1>
+				<?php get_template_part('parts/content', 'classic'); ?>
 
-						<div class="the-content">
-							<?php the_content(); ?>
+			<?php 
+			endwhile; ?>
 
-							<?php wp_link_pages(); ?>
-						</div>
+		<?php 
+		else : ?>
 
-					</article>
+			<?php get_template_part('parts/content', 'none'); ?>
 
-				<?php endwhile; ?>
+		<?php 
+		endif; ?>
 
-			<?php else : ?>
-
-				<article class="post error">
-					<h1 class="404"><?php echo __('Nothing posted yet', 'integromat'); ?></h1>
-				</article>
-
-			<?php endif; ?>
-
-		</div>
 	</div>
+
+<?php get_template_part('parts/footer', 'contact'); ?>
+<?php get_template_part('parts/footer', 'app'); ?>
+
 <?php get_footer(); ?>

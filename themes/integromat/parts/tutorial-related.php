@@ -7,8 +7,10 @@ if ($tags) {
 		$tag_ids[] = $individual_tag->slug;
 	}
 
+	switch_to_blog(1);
 	$args = array(
-		'blog_id' => array(1),
+		'blog_id' => 1,
+		'post_type' => 'tutorial',
 		'posts_per_page' => 5,
 		'orderby' => 'name',
 		'order' => 'ASC',
@@ -21,26 +23,33 @@ if ($tags) {
 		),
 	);
 	
-	$network_q = new Network_Query( $args );
+	$network_q = new WP_Query( $args );
 	
 	if( $network_q->have_posts() ) : ?>
-		<div class="panel top-blue mb-4">
+		<div class="panel panel-columns top-blue mb-5 box-shadow">
 			<h3 class="mb-4"><?php _e("Related tutorials", "integromat"); ?></h3>
 			<?php
 			while( $network_q->have_posts() ) : $network_q->the_post();
 			switch_to_blog( $network_q->post->BLOG_ID ); ?>
-
-				<h5 class="mt-2 font-weight-light">
-					<a href="<?php echo get_permalink($network_q->post->ID); ?>">
+				<a href="<?php echo get_permalink($network_q->post->ID); ?>" class="no-decoration">
+					<?php 
+					if ( has_post_thumbnail($network_q->post->ID) ) {
+						echo get_the_post_thumbnail($network_q->post->ID, "thumbnail", array("class"=>"h-auto w-100"));
+					} else {
+						echo '<img class="h-auto w-100 no-decoration" src="' . get_bloginfo( 'template_directory' ) . '/assets/img/no-pic.jpg" />';
+					} ?>
+					<h4 class="mt-2 font-weight-normal">
 						<?php echo $network_q->post->post_title; ?>
-					</a>
-				</h5>
+					</h4>
+				</a>
 			<?php
-			restore_current_blog();
 		endwhile;
 	
 		echo '</div>';
 	endif;
-	network_reset_postdata(); 
+	wp_reset_postdata();
+	restore_current_blog(); 
 }
 ?> 
+
+ 

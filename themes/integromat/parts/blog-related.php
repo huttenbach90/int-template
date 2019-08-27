@@ -7,6 +7,7 @@ if ($tags) {
 		$tag_ids[] = $individual_tag->slug;
 	}
 
+	switch_to_blog(5);
 	$args = array(
 		'blog_id' => 5,
 		'post_type' => 'post',
@@ -23,26 +24,33 @@ if ($tags) {
 		),
 	);
 	
-	$network_q = new Network_Query( $args );
+	$network_q = new WP_Query( $args );
 	
 	if( $network_q->have_posts() ) : ?>
-		<div class="panel top-blue mb-4">
+		<div class="panel top-blue mb-5">
 			<h3 class="mb-4"><?php _e("Related blog posts", "integromat"); ?></h3>
 			<?php
 			while( $network_q->have_posts() ) : $network_q->the_post();
 			switch_to_blog( $network_q->post->BLOG_ID ); ?>
-
-				<h5 class="mt-2 font-weight-light">
-					<a href="<?php echo get_permalink($network_q->post->ID); ?>">
-						<?php echo $network_q->post->post_title; ?>
+				<div class="related-post">
+					<a href="<?php echo get_permalink($network_q->post->ID); ?>" class="no-decoration d-block">
+						<?php 
+						if ( has_post_thumbnail($network_q->post->ID) ) {
+							echo get_the_post_thumbnail($network_q->post->ID, "thumbnail", array("class"=>"h-auto w-100"));
+						} else {
+							echo '<img class="h-auto w-100 no-decoration" src="' . get_bloginfo( 'template_directory' ) . '/assets/img/no-pic.jpg" />';
+						} ?>
+						<h4 class="mt-2 font-weight-normal">
+							<?php echo $network_q->post->post_title; ?>
+						</h4>
 					</a>
-				</h5>
+				</div>
 			<?php
-			restore_current_blog();
 		endwhile;
 	
 		echo '</div>';
 	endif;
-	network_reset_postdata(); 
+	wp_reset_postdata();
+	restore_current_blog(); 
 }
 ?> 

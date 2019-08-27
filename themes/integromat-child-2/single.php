@@ -1,46 +1,48 @@
 <?php get_header(); ?>
-	<div id="primary" class="row-fluid">
-		<div id="content" role="main" class="span8 offset2">
 
-			<?php if ( have_posts() ) : ?>
+	<?php get_template_part('/parts/page-no', 'header'); ?>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+	<div id="content" role="main" class="container">
 
-					<article class="post">
+		<?php if ( have_posts() ) : ?>
 
-						<h1 class="title"><?php the_title(); ?></h1>
-						<div class="post-meta">
-							<?php the_time('m.d.Y'); ?>
-							<?php the_author(); ?>
+			<?php while ( have_posts() ) : the_post(); ?>
+				<?php setPostViews(get_the_ID()); ?>
 
-						</div>
+				<article class="post row">
+					<div class="col-8 paper box-shadow">
+
+						<h1 class="title display-3 mb-4"><?php the_title(); ?></h1>
 
 						<div class="the-content">
 							<?php the_content(); ?>
-
 							<?php wp_link_pages(); ?>
 						</div>
 
-						<div class="meta clearfix">
-							<div class="category"><?php echo get_the_category_list(); ?></div>
-							<div class="tags"><?php echo get_the_tag_list( '| &nbsp;', '&nbsp;' ); ?></div>
+						<div class="meta mt-5 clearfix">
+							<div class="tags font-weight-bold text-uppercase"><?php echo get_the_tag_list( ' &nbsp;', '&nbsp;' ); ?></div>
 						</div>
 
-					</article>
+					</div>
+					<aside class="col-4 mt-5">
+						<?php get_template_part('/parts/blog', 'author'); ?>
+						<?php get_template_part('/parts/tutorial', 'related'); ?>
+						<?php get_template_part('/parts/doc', 'related'); ?>
+						<?php get_template_part('/parts/webinar', 'related'); ?>
+						<?php get_template_part('/parts/blog', 'related'); ?>
+					</aside>
 
-				<?php endwhile; ?>
-
-				<?php if ( comments_open() || '0' != get_comments_number() )
-							comments_template( '', true ); ?>
-
-			<?php else : ?>
-
-				<article class="post error">
-					<h1 class="404"><?php echo __('Nothing has been posted like that yet', 'integromat'); ?></h1>
 				</article>
 
-			<?php endif; ?>
+			<?php endwhile; ?>
 
-		</div>
+		<?php else : ?>
+
+			<article class="post error">
+				<h1 class="404"><?php echo __('Nothing has been posted like that yet', 'integromat'); ?></h1>
+			</article>
+
+		<?php endif; ?>
+
 	</div>
 <?php get_footer(); ?>

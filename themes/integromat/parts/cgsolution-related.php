@@ -1,33 +1,53 @@
-<?php
-$tags = wp_get_post_terms( get_queried_object_id(), 'post_tag', ['fields' => 'ids'] );
-$args = [
-	'post__not_in'        => array( get_queried_object_id() ),
-	'post_type'			  => 'external',
-	'posts_per_page'      => 1,
-    'tax_query' => [
-        [
-            'taxonomy' => 'post_tag',
-            'terms'    => $tags
-        ]
-    ]
-];
-$my_query = new wp_query( $args );
-if( $my_query->have_posts() ) {
-    while( $my_query->have_posts() ) {
-        $my_query->the_post(); ?>
-        <?php
-		if (has_post_thumbnail()) { ?>
-			<div class="the-image">
-				<?php the_post_thumbnail("thumbnail"); ?>
-			</div>
-		<?php
-		}; ?>
-        <h5>
-            <a href="<?php the_permalink()?>" rel="bookmark" title="<?php the_title(); ?>" rel="nofollow">
-                <?php the_title(); ?>
-            </a>
-        </h5>
-    <?php }
-    wp_reset_postdata();
+
+<?php 
+$tags = wp_get_post_tags($post->ID);
+if ($tags) {
+	$tag_ids = array();
+	foreach($tags as $individual_tag) {
+		$tag_ids[] = $individual_tag->slug;
+	}
+
+	switch_to_blog(2);
+	$args = array(
+		'post_type' => 'external',
+		'posts_per_page' => 5,
+		'orderby' => 'name',
+		'order' => 'ASC',
+		'post_parent' => 0,
+		'tax_query' => array( 
+			array(
+				'taxonomy' => 'post_tag',
+				'field' => 'slug',
+				'terms' => $tag_ids,
+			) 
+		),
+	);
+	
+	$network_q = new WP_Query( $args );
+	
+	if( $network_q->have_posts() ) : ?>
+		<div class="panel top-blue mb-4">
+			<h3 class="mb-4"><?php _e("Related blog posts", "integromat"); ?></h3>
+			<?php
+			while( $network_q->have_posts() ) : $network_q->the_post();
+			switch_to_blog( $network_q->post->BLOG_ID ); ?>
+				<a href="<?php echo get_permalink($network_q->post->ID); ?>" class="no-decoration">
+					<?php 
+					if ( has_post_thumbnail($network_q->post->ID) ) {
+						echo get_the_post_thumbnail($network_q->post->ID, "thumbnail", array("class"=>"h-auto w-100"));
+					} else {
+						echo '<img class="h-auto w-100 no-decoration" src="' . get_bloginfo( 'template_directory' ) . '/assets/img/no-pic.jpg" />';
+					} ?>
+					<h4 class="mt-2 font-weight-normal">
+						<?php echo $network_q->post->post_title; ?>
+					</h4>
+				</a>
+			<?php
+		endwhile;
+	
+		echo '</div>';
+	endif;
+	wp_reset_postdata();
+	restore_current_blog(); 
 }
 ?> 

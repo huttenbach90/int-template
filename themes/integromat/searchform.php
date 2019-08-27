@@ -1,6 +1,6 @@
 <form id="searchform" class="position-relative
     <?php if (is_front_page()) : ?> mt-4
-    <?php elseif (is_page("documentation")) : ?> mt-0 float-right
+    <?php elseif (is_page("documentation")) : ?> mt-4 float-left float-md-right mt-md-0
     <?php else : ?> mt-2
     <?php endif; ?>"
     action="/" method="get">

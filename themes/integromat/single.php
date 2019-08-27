@@ -9,7 +9,7 @@
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<article class="post row">
-					<div class="col-8 paper">
+					<div class="col-8 paper box-shadow">
 						<h1 class="title display-3"><?php the_title(); ?></h1>
 						<div class="post-meta pt-4 pb-4">
 							<i class="fas fa-user mr-1 text-gray"></i> <?php the_author(); ?>
@@ -33,6 +33,7 @@
 							<div class="tags"><?php echo get_the_tag_list( ' &nbsp;', '&nbsp;' ); ?></div>
 						</div>
 
+						<?php /*
 						<div id="responses" class="text-center">
 							<span><?php _e("Was this post helpful?", "integromat"); ?></span>
 							<div class="response-icons">
@@ -47,6 +48,7 @@
 								echo $post_like_count . " out of <span id='total'>" . $total . "</span> found this helpful." ?>
 							</small>
 						</div> 
+						*/ ?>
 
 					</div>
 					<div class="col-3 pt-5">

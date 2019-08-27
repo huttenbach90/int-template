@@ -7,16 +7,8 @@ Template Name: Docs
 <?php get_header(); ?>
 
 <?php get_template_part('parts/page-columns', 'header' ); ?>
+<?php get_template_part('parts/module', 'breadcrumb'); ?>
 
-<div class="bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 py-3">
-				<?php custom_breadcrumbs(); ?>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="pb-5">
 	<div id="primary" class="container pb-3">
 
@@ -77,15 +69,7 @@ Template Name: Docs
 	</div>
 </div>
 
-<div class="container-fluid theme-a1d36e text-center contact-stripe">
-	<?php dynamic_sidebar( 'contact-stripe' ); ?>
-</div>
+<?php get_template_part('parts/footer', 'contact'); ?>
+<?php get_template_part('parts/footer', 'app'); ?>
 
-<div class="gradient integromat-app">
-	<div class="container">
-		<div class="row align-items-center">
-			<?php dynamic_sidebar( 'bottom' ); ?>
-		</div>
-	</div>
-</div>
 <?php get_footer(); ?>

@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+	<?php get_template_part('parts/page-home', 'header' ); ?>
 	<div id="primary" class="row-fluid">
 		<div id="content" role="main" class="span8 offset2">
 
